@@ -1,0 +1,1 @@
+A Java library to communicate with a DSC panel through an Envisalink (EVL4) add-on card.

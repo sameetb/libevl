@@ -7,7 +7,7 @@ import java.util.function.Supplier;
 /**
  * 
  * @author sameetb
- * @since SMP6
+ * @since 201612
  * @param <T>
  */
 public class Lazy<T> implements Supplier<T>, Serializable

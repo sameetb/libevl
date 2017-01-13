@@ -12,7 +12,7 @@ import java.util.function.Supplier;
 
 /**
  * @author sameetb
- * @since SMP6
+ * @since 201612
  */
 public class PacketFlow
 {

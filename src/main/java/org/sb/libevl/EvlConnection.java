@@ -31,7 +31,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * @author sameetb
- * @since SMP6
+ * @since 201612
  */
 public class EvlConnection
 {
@@ -351,5 +351,10 @@ public class EvlConnection
                 return false;
             }
         });
+    }
+    
+    public boolean isAlive()
+    {
+    	return !socket.isClosed();
     }
 }

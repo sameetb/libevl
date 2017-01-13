@@ -15,7 +15,7 @@ import javax.script.ScriptException;
 
 /**
  * @author sameetb
- * @since SMP6
+ * @since 201612
  */
 public class DscConsole
 {

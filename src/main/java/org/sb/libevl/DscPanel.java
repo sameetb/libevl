@@ -26,7 +26,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * @author sameetb
- * @since SMP6
+ * @since 201612
  */
 public class DscPanel
 {
@@ -298,7 +298,7 @@ public class DscPanel
             keyPad[i].state = ((state & bm) == 0) ? LedState.OFF : (flash ? LedState.FLASH : LedState.ON);
             bm >>= 1;
         }
-        sendNotification(Notification.Type.LED , "keds updated");
+        sendNotification(Notification.Type.LED , "leds updated");
     }
     
     private void updateDateTime(String data)

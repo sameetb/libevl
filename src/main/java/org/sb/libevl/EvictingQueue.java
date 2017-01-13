@@ -10,7 +10,7 @@ import java.util.function.Consumer;
 
 /**
  * @author sameetb
- * @since SMP6
+ * @since 201612
  */
 public class EvictingQueue<E> extends ArrayBlockingQueue<E>
 {

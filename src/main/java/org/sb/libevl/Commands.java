@@ -11,11 +11,11 @@ import java.util.stream.Stream;
 
 /**
  * @author sameetb
- * @since SMP6
+ * @since 201612
  */
 public class Commands 
 {
-    enum PanicType {FIRE, AMBULANCE, POLICE};
+    public enum PanicType {FIRE, AMBULANCE, POLICE};
     
     private static String parIdStr(int parId)
     {

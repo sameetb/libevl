@@ -9,7 +9,7 @@ import java.util.stream.Stream;
 
 /**
  * @author sameetb
- * @since SMP6
+ * @since 201612
  */
 public class Packet
 {
@@ -43,8 +43,6 @@ public class Packet
     public String serialize()
     {
         return Stream.of(cmdStr(), data, checksum())
-                     //.flatMap(str -> str.chars().mapToObj(i -> (int)i))
-                     //.map(s -> String.format("%02X", s))
                      .collect(Collectors.joining());
     }
 
@@ -61,32 +59,6 @@ public class Packet
         return packet;
     }
     
-    public static Packet deserializeOld(String pkt) throws InvalidObjectException
-    {
-        final int len = pkt.length();
-        String cmd = deAscii(pkt.substring(0, 6));
-        String data = deAscii(pkt.substring(6, len - 4));
-        String chksm = deAscii(pkt.substring(len - 4));
-        final Packet packet = new Packet(Integer.parseInt(cmd), data);
-        final String checksum = packet.checksum();
-        if(!checksum.equals(chksm)) throw new InvalidObjectException("Checksum match failed, "
-                + "expected=" + checksum + ", found=" + chksm);
-        return packet;
-    }
-    
-    private static String deAscii(String str)
-    {
-        final StringBuffer out = new StringBuffer(str.length()/2);
-        final char[] tmp = new char[2];
-        
-        for(int i = 0; i < str.length(); i++)
-        {
-            tmp[i%2] = str.charAt(i);
-            if(i%2 == 1) out.append((char)Integer.parseUnsignedInt(String.valueOf(tmp), 16));
-        }
-        return out.toString();
-    }
-
     @Override
     public int hashCode()
     {

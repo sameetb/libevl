@@ -25,9 +25,9 @@ public class Notification
 	    MISC
     };
     
-    private final Type type;
-    private final Date ts;
-    private final String msg;
+    public final Type type;
+    public final Date ts;
+    public final String msg;
     
     public Notification(Type type, Date ts, String msg)
     {
@@ -40,7 +40,12 @@ public class Notification
     {
         return JsonHelper.obj(
 	    	JsonHelper.json("type", type.name()),
-	    	JsonHelper.json("ts", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())),
-	    	JsonHelper.json("msg", Stream.of(msg).collect(Collectors.joining(" "))));        
-    }    
+	    	JsonHelper.json("ts", date()),
+	    	JsonHelper.json("msg", msg));        
+    } 
+    
+    public String date()
+    {
+    	return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(ts);
+    }
 }

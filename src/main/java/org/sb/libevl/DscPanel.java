@@ -32,7 +32,7 @@ public class DscPanel
 {
     private static final Logger log = LoggerFactory.getLogger(DscPanel.class);
 
-    enum LedState {OFF, ON, FLASH, UNKNOWN};
+    public enum LedState {OFF, ON, FLASH, UNKNOWN};
     
     private Date dateTime;
     
@@ -64,13 +64,13 @@ public class DscPanel
                                                 new Led("FIRE"),
                                                 new Led("BACKLIGHT")
                                             };
-    enum AlarmState {NORMAL, ALARM, UNKNOWN};
+    public enum AlarmState {NORMAL, ALARM, UNKNOWN};
     
-    enum ZoneState {CLOSED, OPEN, UNKNOWN};
+    public enum ZoneState {CLOSED, OPEN, UNKNOWN};
     
-    enum FaultState {NORMAL, FAULT, UNKNOWN};
+    public enum FaultState {NORMAL, FAULT, UNKNOWN};
     
-    enum TamperState {NORMAL, TAMPER, UNKNOWN};
+    public enum TamperState {NORMAL, TAMPER, UNKNOWN};
     
     static class Zone
     {
@@ -111,11 +111,11 @@ public class DscPanel
         }
     }
     
-    enum PartitionState {ALARM, READY, NOTREADY, BUSY, ARMED, DISARMED, UNKNOWN}
+    public enum PartitionState {ALARM, READY, NOTREADY, BUSY, ARMED, DISARMED, UNKNOWN}
     
-    enum PartitionArmState {AWAYARMED, STAYARMED, ZERO_ENTRY_AWAY, ZERO_ENTRY_STAY, NONE};
+    public enum PartitionArmState {AWAYARMED, STAYARMED, ZERO_ENTRY_AWAY, ZERO_ENTRY_STAY, NONE};
     
-    enum PartitionDelay {NONE, EXITDELAY, ENTRYDELAY}
+    public enum PartitionDelay {NONE, EXITDELAY, ENTRYDELAY}
     
     static class Partition
     {
@@ -372,9 +372,10 @@ public class DscPanel
             if(mode < values.length) p.arm = values[mode];
             else log("Ignoring unknown arm mode = " + mode);
             p.delay = PartitionDelay.NONE;
+            sendNotification(Notification.Type.ARM, state.name() + "." + p.arm.name());
         }
-        
-        sendNotification(state != PartitionState.ALARM ? Notification.Type.ARM : Notification.Type.ALARM , state.name());
+        else
+        	sendNotification(state != PartitionState.ALARM ? Notification.Type.ARM : Notification.Type.ALARM , state.name());
     }
 
     private Partition parsePid(String data)

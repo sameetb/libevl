@@ -169,14 +169,14 @@ public class DscPanel
                         put(561, DscPanel.this::updateTemperature);
                         put(562, DscPanel.this::updateTemperature);
                         
-                        put(601, data -> updateZoneA(data, Optional.of(AlarmState.ALARM), Optional.empty()));
-                        put(602, data -> updateZoneA(data, Optional.of(AlarmState.NORMAL), Optional.empty()));
-                        put(603, data -> updateZoneA(data, Optional.empty(), Optional.of(TamperState.TAMPER)));
-                        put(604, data -> updateZoneA(data, Optional.empty(), Optional.of(TamperState.NORMAL)));
-                        put(605, data -> updateZoneB(data, Optional.empty(), Optional.of(FaultState.FAULT)));
-                        put(606, data -> updateZoneB(data, Optional.empty(), Optional.of(FaultState.NORMAL)));
-                        put(609, data -> updateZoneB(data, Optional.of(ZoneState.OPEN), Optional.empty()));
-                        put(610, data -> updateZoneB(data, Optional.of(ZoneState.CLOSED), Optional.empty()));
+                        put(601, data -> updateZone(data, AlarmState.ALARM));
+                        put(602, data -> updateZone(data, AlarmState.NORMAL));
+                        put(603, data -> updateZone(data, TamperState.TAMPER));
+                        put(604, data -> updateZone(data, TamperState.NORMAL));
+                        put(605, data -> updateZone(data, FaultState.FAULT));
+                        put(606, data -> updateZone(data, FaultState.NORMAL));
+                        put(609, data -> updateZone(data, ZoneState.OPEN));
+                        put(610, data -> updateZone(data, ZoneState.CLOSED));
                         
                         put(620, data -> updateAlarm("Duress", false));
                         put(621, data -> updateAlarm("Fire", false));
@@ -332,6 +332,16 @@ public class DscPanel
         return z;
     }
 
+    private void updateZone(String data, AlarmState aState)
+    {
+    	updateZoneA(data, Optional.of(aState), Optional.empty());
+    }
+    
+    private void updateZone(String data, TamperState tState)
+    {
+    	updateZoneA(data, Optional.empty(), Optional.of(tState));
+    }
+    
     private void updateZoneA(String data, Optional<AlarmState> aState, Optional<TamperState> tState)
     {
         int partition = Integer.parseInt(data.substring(0, 1));
@@ -342,6 +352,16 @@ public class DscPanel
         tState.ifPresent(t -> {z.tamper = t;sendNotification(Notification.Type.ZONE , "Zone "  + zone + " tamper: " + z);});
     }
 
+    private void updateZone(String data, ZoneState aState)
+    {
+    	updateZoneB(data, Optional.of(aState), Optional.empty());
+    }
+    
+    private void updateZone(String data, FaultState tState)
+    {
+    	updateZoneB(data, Optional.empty(), Optional.of(tState));
+    }
+    
     private void updateZoneB(String data, Optional<ZoneState> state, Optional<FaultState> fState)
     {
         int zone = Integer.parseInt(data.substring(0, 3));
@@ -388,7 +408,7 @@ public class DscPanel
     {
         Partition p = parsePid(data);
         log("Updating partition=" + p.pid +  ", delay=" + state);
-        sendNotification(Notification.Type.ARM, state.name());
+        sendNotification(Notification.Type.MISC, state.name());
         p.delay = state;
     }
     
